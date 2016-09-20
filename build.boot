@@ -9,7 +9,7 @@
 ;; See README.md for more details.
 
 (set-env!
- :source-paths #{"sass" "src"}
+ :source-paths #{"sass" "src/clj" "src/cljs" "src/cljc"}
  :resource-paths #{"resources"}
  :asset-paths #{"assets"}
  :dependencies
@@ -100,12 +100,12 @@
   (comp
    (watch)
    (speak)
-   (sass :output-style :expanded)
-   (reload :on-jsload 'edge.main/init)
+   #_(sass :output-style :expanded)
+   #_(reload :on-jsload 'edge.main/init)
    (cljs-repl :nrepl-opts {:client false
                            :port repl-port
                            :init-ns 'user}) ; this is also the server repl!
-   (cljs :ids #{"edge"} :optimizations :none)
+   #_(cljs :ids #{"edge"} :optimizations :none)
    (dev-system)
    (target)))
 
