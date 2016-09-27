@@ -2,8 +2,13 @@
   (:require
     [clojure.tools.logging :refer :all]
     [edge.database :as db]
-    [hiccup.core :as hiccup]
+    [edge.views :as views]
+    [schema.core :as s]
     [yada.yada :as yada]))
+
+(defn request-content-type
+  [ctx]
+  (get-in ctx [:request :headers "content-type"]))
 
 (defn root
   []
@@ -14,28 +19,32 @@
 (defn todos-get-response
   [database ctx]
   (case (yada/content-type ctx)
-    "text/html" (hiccup/html
-                  [:html
-                   [:head]
-                   [:body
-                    [:main
-                     [:h1 "Todos"]
-                     [:ol
-                      (for [{:keys [text]} (db/get-todos database)]
-                        [:li [:span text]])]]]])
+    "text/html" (views/as-html
+                  (views/Todos (db/get-todos database)))
     "application/json" (db/get-todos database)))
 
 (defn todos-post-response
   [database ctx]
-  (let [todo (:body ctx)]
-    (db/insert-todo! database todo)))
+  (case (request-content-type ctx)
+    "application/json"
+    (let [todo (:body ctx)]
+      (db/insert-todo! database todo))
+
+    "application/x-www-form-urlencoded"
+    (let [todo {:text (get-in ctx [:parameters :form :text])}]
+      (db/insert-todo! database todo)
+      (-> (:response ctx)
+          (assoc :status 303)
+          (update-in [:headers] assoc "location" "/todos")))))
 
 (defn todos
   [database]
   (yada/resource
     {:methods {:get {:produces #{"text/html" "application/json"}
                      :response (partial todos-get-response database)}
-               :post {:consumes "application/json"
+               :post {:consumes #{"application/json" "application/x-www-form-urlencoded"}
                       :produces "application/json"
+                      :parameters {:form
+                                   {:text s/Str}}
                       :response (partial todos-post-response database)}}}))
 

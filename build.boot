@@ -44,6 +44,9 @@
    [com.cognitect/transit-clj "0.8.285"]
    ;;[com.cognitect/transit-cljs "0.8.239"]
 
+   ;; Server + App deps
+   [sablono "0.7.4"]
+
    ;; Logging
    [org.clojure/tools.logging "0.3.1"]
    [org.slf4j/jcl-over-slf4j "1.7.18"]
