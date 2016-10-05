@@ -12,14 +12,16 @@
 (s/defn Todo
   [t]
   [:input {:type :checkbox
-           :name (:id t)}
+           :name "ids"
+           :checked (not (nil? (:completed-at t)))
+           :value (:id t)}
    [:span (:text t)]])
 
 (s/defn Todos
   [ts]
   [:section
    [:form {:method :post
-           :action "/todos"}
+           :action "/todos/update"}
     [:ol
      (for [[_ t] ts]
        [:li (Todo t)])]
