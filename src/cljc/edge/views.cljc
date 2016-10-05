@@ -21,7 +21,7 @@
    [:form {:method :post
            :action "/todos"}
     [:ol
-     (for [t ts]
+     (for [[_ t] ts]
        [:li (Todo t)])]
     [:input {:type :hidden
              :name "type"

@@ -18,18 +18,20 @@
   TodoInternal)
 
 (s/defschema DB
-  {:todos [TodoInternal]})
+  {:todos {s/Uuid TodoInternal}})
 
 (s/def db-seed :- DB
-  {:todos [{:text "one"
-            :id (java.util.UUID/randomUUID)
-            :created-at (java.util.Date.)
-            :completed-at nil}
-           
-           {:text "two"
-            :id (java.util.UUID/randomUUID)
-            :created-at (java.util.Date.)
-            :completed-at (java.util.Date.)}]})
+  (let [id1 (java.util.UUID/randomUUID)
+        id2 (java.util.UUID/randomUUID)]
+    {:todos {id1 {:text "one"
+                  :id id1
+                  :created-at (java.util.Date.)
+                  :completed-at nil}
+
+             id2 {:text "two"
+                  :id id2
+                  :created-at (java.util.Date.)
+                  :completed-at nil}}}))
 
 (defonce root
   (atom db-seed))
@@ -65,11 +67,12 @@
 (s/defn insert-todo! :- TodoOutput
   [database
    todo :- TodoInput]
-  (let [final-todo (merge todo
-                          {:id (java.util.UUID/randomUUID)
+  (let [id (java.util.UUID/randomUUID)
+        final-todo (merge todo
+                          {:id id
                            :created-at (java.util.Date.)
                            :completed-at nil})]
     (swap! (:connection database)
-           update-in [:todos] conj final-todo)
+           update-in [:todos] assoc id final-todo)
     final-todo))
 
