@@ -49,3 +49,32 @@
                                     :text s/Str}}
                       :response (partial todos-post-response database)}}}))
 
+(defn todos-update-response
+  [database ctx]
+  (case (request-content-type ctx)
+    "application/json"
+    (let [{:keys [ids]} (:body ctx)]
+      (doseq [id ids]
+        (db/complete-todo! database id))
+      (-> (:response ctx)
+          (assoc :status 303)
+          (update-in [:headers] assoc "location" "/todos")))
+    
+    "application/x-www-form-urlencoded"
+    (let [{:keys [ids]} (get-in ctx [:parameters :form])]
+      (doseq [id ids]
+        (db/complete-todo! database id))
+      (-> (:response ctx)
+          (assoc :status 303)
+          (update-in [:headers] assoc "location" "/todos")))))
+
+(defn todos-update
+  [database]
+  (yada/resource
+    {:methods {:post {:consumes #{"application/json" "application/x-www-form-urlencoded"}
+                      :produces "application/json"
+                      :parameters {:form
+                                   {:type (s/eq "toggle-complete")
+                                    :ids [s/Uuid]}}
+                      :response (partial todos-update-response database)}}}))
+
