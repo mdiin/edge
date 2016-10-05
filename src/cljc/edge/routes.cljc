@@ -13,7 +13,8 @@
   [""
    [
     ["/" (r/root)]
-    ["/todos" #?(:clj (r/todos ?database)
+    ["/todos" #?(:clj [["" (r/todos ?database)]
+                       ["/update" (r/todos-update ?database)]]
                  :cljs (r/todos))]
 
     ;; This is a backstop. Always produce a 404 if we ge there. This
