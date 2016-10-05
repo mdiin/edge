@@ -45,6 +45,7 @@
                :post {:consumes #{"application/json" "application/x-www-form-urlencoded"}
                       :produces "application/json"
                       :parameters {:form
-                                   {:text s/Str}}
+                                   {:type (s/eq "create-new")
+                                    :text s/Str}}
                       :response (partial todos-post-response database)}}}))
 
