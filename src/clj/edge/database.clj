@@ -76,3 +76,9 @@
            update-in [:todos] assoc id final-todo)
     final-todo))
 
+(s/defn complete-todo! :- TodoOutput
+  [database
+   todo-id :- s/Uuid]
+  (swap! (:connection database)
+         update-in [:todos todo-id :completed-at] (constantly (clj-time.core/now))))
+
