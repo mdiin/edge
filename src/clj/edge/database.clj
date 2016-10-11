@@ -1,6 +1,7 @@
 (ns edge.database
   "Data schema definition and database access functions."
   (:require
+    [clj-time.core :as t]
     [clojure.tools.logging :refer :all]
     [com.stuartsierra.component :as component]
     [schema.core :as s]))
@@ -44,7 +45,7 @@
       (do
         (infof "Starting database")
         (assoc this :connection root))))
-  
+
   (stop [this]
     (if connection
       (do
@@ -80,5 +81,5 @@
   [database
    todo-id :- s/Uuid]
   (swap! (:connection database)
-         update-in [:todos todo-id :completed-at] (constantly (clj-time.core/now))))
+         update-in [:todos todo-id :completed-at] (constantly (t/now))))
 
