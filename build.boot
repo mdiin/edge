@@ -45,7 +45,7 @@
    ;;[com.cognitect/transit-cljs "0.8.239"]
 
    ;; Server + App deps
-   [sablono "0.7.4"]
+   [sablono "0.7.5"]
 
    ;; Logging
    [org.clojure/tools.logging "0.3.1"]
