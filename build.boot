@@ -36,7 +36,7 @@
    [hiccup "1.0.5"]
    [org.clojure/tools.namespace "0.2.11"]
    [prismatic/schema "1.1.3"]
-   [selmer "1.0.4"]
+   [selmer "1.10.0"]
    [yada "1.1.28"]
 
    ;; App deps
