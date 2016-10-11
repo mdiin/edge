@@ -31,7 +31,7 @@
    ;; Server deps
    [aero "1.0.1"]
    [aleph "0.4.1"]
-   [bidi "2.0.9"]
+   [bidi "2.0.12"]
    [com.stuartsierra/component "0.3.1"]
    [hiccup "1.0.5"]
    [org.clojure/tools.namespace "0.2.11"]
