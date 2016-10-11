@@ -12,7 +12,7 @@
   [?database :- (s/maybe {s/Any s/Any})]
   [""
    [
-    ["/" (r/root)]
+    ["/" (r/root ?database)]
     ["/todos" #?(:clj [["" (r/todos ?database)]
                        ["/update" (r/todos-update ?database)]]
                  :cljs (r/todos))]

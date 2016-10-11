@@ -42,3 +42,15 @@
     [:input {:type :submit
              :value "New"}]]])
 
+(s/defn Root :- s/Any
+  [ts]
+  [:html
+   [:head
+    [:title "Todos and stuff"]]
+   [:body
+    [:header
+     [:h1 "Todos"]]
+    [:main
+     #?(:clj (Todos ts)
+        :cljs nil)]]])
+
