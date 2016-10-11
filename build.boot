@@ -40,7 +40,7 @@
    [yada "1.1.39"]
 
    ;; App deps
-   [reagent "0.6.0-rc"]
+   [reagent "0.6.0"]
    [com.cognitect/transit-clj "0.8.285"]
    ;;[com.cognitect/transit-cljs "0.8.239"]
 
