@@ -41,7 +41,7 @@
 
    ;; App deps
    [reagent "0.6.0"]
-   [com.cognitect/transit-clj "0.8.285"]
+   [com.cognitect/transit-clj "0.8.290"]
    ;;[com.cognitect/transit-cljs "0.8.239"]
 
    ;; Server + App deps
