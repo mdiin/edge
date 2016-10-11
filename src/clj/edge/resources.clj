@@ -11,10 +11,12 @@
   (get-in ctx [:request :headers "content-type"]))
 
 (defn root
-  []
+  [database]
   (yada/resource
     {:methods {:get {:produces "text/html"
-                     :response "<html><head></head><body><h1>The root</h1></body></html>"}}}))
+                     :response (fn [ctx]
+                                 (views/as-html
+                                   (views/Root (db/get-todos database))))}}}))
 
 (defn todos-get-response
   [database ctx]
@@ -35,7 +37,7 @@
       (db/insert-todo! database todo)
       (-> (:response ctx)
           (assoc :status 303)
-          (update-in [:headers] assoc "location" "/todos")))))
+          (update-in [:headers] assoc "location" "/")))))
 
 (defn todos
   [database]
@@ -66,7 +68,7 @@
         (db/complete-todo! database id))
       (-> (:response ctx)
           (assoc :status 303)
-          (update-in [:headers] assoc "location" "/todos")))))
+          (update-in [:headers] assoc "location" "/")))))
 
 (defn todos-update
   [database]
