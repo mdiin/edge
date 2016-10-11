@@ -109,7 +109,7 @@
    (cljs-repl :nrepl-opts {:client false
                            :port repl-port
                            :init-ns 'user}) ; this is also the server repl!
-   #_(cljs :ids #{"edge"} :optimizations :none)
+   (cljs :ids #{"edge"} :optimizations :none)
    (dev-system)
    (target)))
 
