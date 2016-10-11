@@ -35,7 +35,7 @@
    [com.stuartsierra/component "0.3.1"]
    [hiccup "1.0.5"]
    [org.clojure/tools.namespace "0.2.11"]
-   [prismatic/schema "1.0.4"]
+   [prismatic/schema "1.1.3"]
    [selmer "1.0.4"]
    [yada "1.1.28"]
 
