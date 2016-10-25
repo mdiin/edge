@@ -1,8 +1,19 @@
-(ns edge.main)
+(ns edge.main
+  (:require
+    [edge.event-handlers]
+    [edge.subscription-handlers]
+    [edge.views :as v]
 
-(.log js/console "EDGE")
+    [reagent.core :as reagent]
+    [re-frame.core :refer [dispatch-sync]]
+    [schema.core :as s]))
 
-(defn init
+(s/set-fn-validation! true)
+
+(defn ^:export init
   []
-  (.log js/console "INIT"))
+  (.log js/console "INIT 2")
+  (dispatch-sync [:app/initialize])
+  (reagent/render [v/Root]
+                  (.getElementById js/document "app")))
 
