@@ -2,6 +2,7 @@
   (:require
     #?(:clj [hiccup.core :as html]
        :cljs [sablono.core :as html :refer-macros [html]])
+    #?@(:cljs [[re-frame.core :refer [subscribe]]])
     [schema.core :as s]))
 
 (s/defn as-html
@@ -41,6 +42,13 @@
              :value "create-new"}]
     [:input {:type :submit
              :value "New"}]]])
+
+(defn AppContent
+  [ts]
+  [:div
+   [:header
+    [:h1 "Todos"]]
+   [:main (Todos ts)]])
 
 (s/defn ServerRoot :- s/Any
   [ts]
@@ -88,16 +96,14 @@
             :href "img/favicon-152x152.png"
             :sizes "152x152"}]]
    [:body
-    [:section#app
-     [:header
-      [:h1 "Todos"]]
-     [:main (Todos ts)]]
+    [:section#app (AppContent)]
     [:script {:type "text/javascript"
               :src "edge.js"}]]])
 
-(defn ClientRoot
-  []
-  [:p "Foo"])
+#?(:cljs (defn ClientRoot
+           []
+           (let [todos (subscribe [:todos/all])]
+             [AppContent @todos])))
 
 (defn Root
   [?data]
