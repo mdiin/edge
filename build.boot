@@ -105,7 +105,7 @@
    (watch)
    (speak)
    #_(sass :output-style :expanded)
-   #_(reload :on-jsload 'edge.main/init)
+   (reload :on-jsload 'edge.main/init)
    (cljs-repl :nrepl-opts {:client false
                            :port repl-port
                            :init-ns 'user}) ; this is also the server repl!
